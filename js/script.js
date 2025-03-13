@@ -12,10 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             cetusTimeElement.innerHTML = 'Fetching Cetus data...';
             const response = await fetch('https://api.warframestat.us/pc/cetusCycle');
-            const data = await response.json();
             
-            if (data) {
-                const isDay = data.isDay !== undefined ? data.isDay : false;
+            // Check if response is valid
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Cetus API response:', data);
+            
+            if (data && typeof data === 'object') {
+                const isDay = data.isDay === true;
                 const timeLeft = data.timeLeft || 'unknown';
                 const state = isDay ? 'Day' : 'Night';
                 
@@ -26,11 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
             } else {
-                cetusTimeElement.textContent = 'Cetus cycle data unavailable.';
+                cetusTimeElement.textContent = 'Invalid Cetus cycle data format.';
             }
         } catch (error) {
             console.error('Error fetching Cetus time:', error);
-            cetusTimeElement.textContent = 'Failed to retrieve Cetus time.';
+            cetusTimeElement.textContent = `Failed to retrieve Cetus time: ${error.message}`;
         }
     }
     
@@ -41,10 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             vallisTimeElement.innerHTML = 'Fetching Vallis data...';
             const response = await fetch('https://api.warframestat.us/pc/vallisCycle');
-            const data = await response.json();
             
-            if (data) {
-                const isWarm = data.isWarm !== undefined ? data.isWarm : false;
+            // Check if response is valid
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Vallis API response:', data);
+            
+            if (data && typeof data === 'object') {
+                const isWarm = data.isWarm === true;
                 const timeLeft = data.timeLeft || 'unknown';
                 const state = isWarm ? 'Warm' : 'Cold';
                 
@@ -55,11 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
             } else {
-                vallisTimeElement.textContent = 'Vallis cycle data unavailable.';
+                vallisTimeElement.textContent = 'Invalid Vallis cycle data format.';
             }
         } catch (error) {
             console.error('Error fetching Vallis cycle:', error);
-            vallisTimeElement.textContent = 'Failed to retrieve Vallis cycle.';
+            vallisTimeElement.textContent = `Failed to retrieve Vallis cycle: ${error.message}`;
         }
     }
     
@@ -70,10 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             cambionTimeElement.innerHTML = 'Fetching Cambion data...';
             const response = await fetch('https://api.warframestat.us/pc/cambionCycle');
-            const data = await response.json();
             
-            if (data) {
-                const state = data.active || 'Unknown';
+            // Check if response is valid
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Cambion API response:', data);
+            
+            if (data && typeof data === 'object') {
+                const state = data.active || data.state || 'Unknown';
                 const timeLeft = data.timeLeft || 'unknown';
                 
                 cambionTimeElement.innerHTML = `
@@ -83,11 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
             } else {
-                cambionTimeElement.textContent = 'Cambion cycle data unavailable.';
+                cambionTimeElement.textContent = 'Invalid Cambion cycle data format.';
             }
         } catch (error) {
             console.error('Error fetching Cambion cycle:', error);
-            cambionTimeElement.textContent = 'Failed to retrieve Cambion cycle.';
+            cambionTimeElement.textContent = `Failed to retrieve Cambion cycle: ${error.message}`;
         }
     }
     
