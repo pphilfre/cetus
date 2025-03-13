@@ -3,14 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warframe Cetus Time</title>
+    <title>Warframe World Cycles</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Cetus Time Tracker</h1>
-        <p>The current time on Cetus is:</p>
-        <div id="cetus-time" class="time-display">Loading...</div>
+        <h1>Warframe World Cycles Tracker</h1>
+        
+        <div class="cycle-section">
+            <h2>Cetus (Earth)</h2>
+            <p>Current cycle status:</p>
+            <div id="cetus-time" class="time-display">Loading Cetus data...</div>
+        </div>
+        
+        <div class="cycle-section">
+            <h2>Orb Vallis (Venus)</h2>
+            <p>Current cycle status:</p>
+            <div id="vallis-time" class="time-display">Loading Vallis data...</div>
+        </div>
+        
+        <div class="cycle-section">
+            <h2>Cambion Drift (Deimos)</h2>
+            <p>Current cycle status:</p>
+            <div id="cambion-time" class="time-display">Loading Cambion data...</div>
+        </div>
+
+        <div class="footer">
+            <p>Data refreshes automatically every minute</p>
+            <button id="refresh-button">Refresh Now</button>
+        </div>
     </div>
     <script src="js/script.js"></script>
 </body>
