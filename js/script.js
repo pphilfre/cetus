@@ -36,14 +36,16 @@ async function fetchCambionCycle() {
     try {
         const response = await fetch('https://api.warframestat.us/pc/cambionCycle');
         const data = await response.json();
-        if (data && data.start && data.end) {
-            cambionTimeElement.textContent = `Cambion Cycle: ${data.start} - ${data.end}`;
+        // Expected response format:
+        // { "id": "string", "expiry": "string", "activation": "string", "state": "vome", "active": "vome", "timeLeft": "string" }
+        if (data && data.activation && data.expiry && data.timeLeft) {
+            cambionTimeElement.textContent = `Cambion Drift: ${data.activation} - ${data.expiry} (Time Left: ${data.timeLeft})`;
         } else {
-            cambionTimeElement.textContent = 'Cambion cycle data unavailable.';
+            cambionTimeElement.textContent = 'Cambion drift data unavailable.';
         }
     } catch (error) {
-        console.error('Error fetching Cambion cycle:', error);
-        cambionTimeElement.textContent = 'Failed to retrieve Cambion cycle.';
+        console.error('Error fetching Cambion drift:', error);
+        cambionTimeElement.textContent = 'Failed to retrieve Cambion drift.';
     }
 }
 
