@@ -21,8 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             console.log('Cetus API response:', data);
             
-            if (data && typeof data === 'object') {
-                const isDay = data.isDay === true;
+            // More permissive data checking
+            if (data) {
+                // Convert isDay to boolean regardless of its type
+                const isDay = Boolean(data.isDay);
                 const timeLeft = data.timeLeft || 'unknown';
                 const state = isDay ? 'Day' : 'Night';
                 
@@ -57,8 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             console.log('Vallis API response:', data);
             
-            if (data && typeof data === 'object') {
-                const isWarm = data.isWarm === true;
+            // More permissive data checking
+            if (data) {
+                // Convert isWarm to boolean regardless of its type
+                const isWarm = Boolean(data.isWarm);
                 const timeLeft = data.timeLeft || 'unknown';
                 const state = isWarm ? 'Warm' : 'Cold';
                 
@@ -93,12 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             console.log('Cambion API response:', data);
             
-            if (data && typeof data === 'object') {
+            // More permissive data checking
+            if (data) {
+                // For Cambion, the state could be in active or state field
                 const state = data.active || data.state || 'Unknown';
                 const timeLeft = data.timeLeft || 'unknown';
                 
+                // Make sure we handle any case format
+                const cycleClass = (state + '').toLowerCase();
+                
                 cambionTimeElement.innerHTML = `
-                    <div class="cycle ${state.toLowerCase()}">
+                    <div class="cycle ${cycleClass}">
                         <span class="state">${state}</span>
                         <span class="time-left">Time remaining: ${timeLeft}</span>
                     </div>
